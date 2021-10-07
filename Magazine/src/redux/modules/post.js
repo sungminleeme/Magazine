@@ -130,7 +130,10 @@ const addPostFB = (contents = "", layout_type = "a") => {
       window.alert("이미지가 필요해요!");
       return;
     }
-
+    if (!_post) {
+      window.alert("내용이필요");
+      return;
+    }
     const _upload = storage
       .ref(`images/${user_info.user_id}_${new Date().getTime()}`)
       .putString(_image, "data_url");
