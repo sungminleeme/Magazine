@@ -19,7 +19,7 @@ import styled from "styled-components";
           <Box>
             <Text>{props.insert_dt}</Text>
             {props.is_me && (
-                <Button
+                <Button 
                   width="50px"
                   margin="4px"
                   padding="4px"
@@ -103,7 +103,7 @@ Post.defaultProps = {
   image_url: "https://likerdo-bucket-list.s3.ap-northeast-2.amazonaws.com/yui.jpg",
   contents: "고양이네요!",
   comment_cnt: 10,
-  like_cnt: 3,
+  like_cnt: 0,
   layout_type: "a",
   insert_dt: "2021-02-27 10:00:00",
   is_me: false,
