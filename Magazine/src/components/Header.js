@@ -9,6 +9,8 @@ import { history } from "../redux/configureStore";
 import { apiKey } from "../shared/firebase";
 
 import NotiBadge from "./NotiBadge";
+import PersonIcon from '@material-ui/icons/Person';
+import LockOpenIcon from '@material-ui/icons/LockOpen';
 
 const Header = (props) => {
   const dispatch = useDispatch();
@@ -23,28 +25,26 @@ const Header = (props) => {
   if (is_login && is_session) {
     return (
       <React.Fragment>
-        <Grid is_flex padding="4px 16px">
-          <Grid>
-            <Button size="24px" bold _onClick={()=>{
-              history.push("/");
-            }}  bold>
-              나만의 매거진
-            </Button>
+        <Grid bg="#FFD600" is_flex padding="4px 16px">
+          <Grid _onClick={()=>history.push("/")}>
+          <Text margin="0px" size="24px" bold>
+              매거진
+            </Text>
           </Grid>
 
-          <Grid is_flex>
-            <Button text="내정보"></Button>
+          <Grid is_flex width="200px">
+          <Grid padding="5px 0 0 0" width="auto"><PersonIcon fontSize="large"/></Grid>
+            
             
             <NotiBadge _onClick={() => {
               history.push("/noti");
             }}
             />
-            <Button
-              text="로그아웃"
+            <Grid padding="5px 0 0 0" width="auto"
               _onClick={() => {
                 dispatch(userActions.logoutFB());
               }}
-            ></Button>
+            ><LockOpenIcon fontSize="large"/></Grid>
           </Grid>
         </Grid>
       </React.Fragment>
@@ -53,23 +53,20 @@ const Header = (props) => {
 
   return (
     <React.Fragment>
-      <Grid is_flex padding="4px 16px">
-        <Grid>
-          <Button size="24px" bold _onClick={()=>{
-              history.push("/");
-            }}>
-          나만의 매거진
-          </Button>
-        </Grid>
-
+      <Grid bg="#FFD600" is_flex padding="4px 16px">
+      <Grid _onClick={history.push("/")} width="150%">
+          <Text margin="0px" size="24px" bold>
+            매거진
+          </Text>
+          </Grid>
         <Grid is_flex>
-          <Button
+          <Button bg="#FFD600" color="#212121" 
             text="로그인"
             _onClick={() => {
               history.push("/login");
             }}
           ></Button>
-          <Button
+          <Button bg="#FFD600" color="#212121"
             text="회원가입"
             _onClick={() => {
               history.push("/signup");

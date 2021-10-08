@@ -355,7 +355,7 @@ const setIsLike = (_post_list, paging) => {
       });
 
       // 아래 주석을 풀고 콘솔로 확인해보세요!
-       console.log(like_list);
+       //console.log(like_list);
 
       // user_id 가져오기!
       const user_id = getState().user.user.uid;
