@@ -19,6 +19,7 @@ import styled from "styled-components";
           <Box>
             <Text>{props.insert_dt}</Text>
             {props.is_me && (
+              <>
                 <Button 
                   width="50px"
                   margin="4px"
@@ -28,6 +29,22 @@ import styled from "styled-components";
                   }}>
                   수정
                 </Button>
+                <Button
+                  width="50px"
+                  margin="4px"
+                  padding="4px"
+                  _onClick={(e) => {
+                     e.preventDefault();
+                     e.stopPropagation();
+                    // 게시글 삭제하기
+                    //confrim 을 사용하고 싶었음
+                    dispatch(postActions.deletePostFB(props.id));
+                    window.alert("삭제 되었습니다");
+                  }}
+                >
+                  삭제
+                </Button>
+                </>
               )}
           </Box>
         </Grid>

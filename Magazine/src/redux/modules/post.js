@@ -14,6 +14,7 @@ const SET_POST = "SET_POST";
 const ADD_POST = "ADD_POST";
 const EDIT_POST = "EDIT_POST";
 const LOADING = "LOADING";
+const DELETE_POST = "DELETE_POST";
 const LIKE_TOGGLE = "LIKE_TOGGLE";
 
 const setPost = createAction(SET_POST, (post_list, paging) => ({ post_list, paging }));
@@ -22,6 +23,7 @@ const editPost = createAction(EDIT_POST, (post_id, post) => ({
   post_id,
   post,
 }));
+const deletePost = createAction(DELETE_POST, (post_id, post) => ({post_id}))
 const loading = createAction(LOADING, (is_loading) => ({ is_loading }));
 // 좋아요 토글 액션 생성자
 const likeToggle = createAction(LIKE_TOGGLE, (post_id, is_like = null) => ({
@@ -400,6 +402,29 @@ const getOnePostFB = (id) => {
       });
   }
 }
+const deletePostFB = (id) => {
+  return function (dispatch, getState, { history }) {
+    // id가 없으면 return!
+    if (!id) {
+      window.alert("삭제할 수 없는 게시글이에요!");
+      return;
+    }
+
+    const postDB = firestore.collection("post");
+
+    // 게시글 id로 선택해서 삭제하기!
+    postDB
+      .doc(id)
+      .delete()
+      .then((res) => {
+        dispatch(deletePost(id));
+        history.replace("/");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+};
 
 export default handleActions(
   {
@@ -437,6 +462,15 @@ export default handleActions(
       [LOADING]: (state, action) => produce(state, (draft) => {
         draft.is_loading = action.payload.is_loading;
       }),
+      [DELETE_POST]: (state, action) =>
+      produce(state, (draft) => {
+        let idx = draft.list.findIndex((p) => p.id === action.payload.post_id);
+
+        if (idx !== -1) {
+          // 배열에서 idx 위치의 요소 1개를 지웁니다.
+          draft.list.splice(idx, 1);
+        }
+      }),
       [LIKE_TOGGLE]: (state, action) =>
       produce(state, (draft) => {
         // 배열에서 몇 번째에 있는 지 찾은 다음, is_like를 action에서 가져온 값으로 바꾸기!
@@ -457,6 +491,7 @@ const actionCreators = {
   editPostFB,
   getOnePostFB,
   toggleLikeFB,
+  deletePostFB,
 };
 
 export { actionCreators };
